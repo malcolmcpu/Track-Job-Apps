@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <title>My Applications</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="background">
+<div class="container">
+
+  <header class="topbar">
+    <h1>💻 My Applications</h1>
+    <nav>
+      <a href="/applications/new" class="button">+ Add Application</a>
+      <a href="/logout">Log Out</a>
+    </nav>
+  </header>
+
+    <main>
+    <% if (applications.length === 0) { %>
+      <p>Nothing here yet.</p>
+    <% } else { %>
+      <table>
+        <thead>
+          <tr><th>Company</th><th>Role</th><th>Status</th><th>Applied</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% applications.forEach(a => { %>
+            <tr>
+              <td>
+                <% if (a.jobUrl) { %>
+                  <a href="<%= a.jobUrl %>" target="_blank" rel="noopener"><%= a.company %></a>
+                <% } else { %>
+                  <%= a.company %>
+                <% } %>
+              </td>
+              <td><%= a.role %></td>
+              <td><span class="status"><%= a.status %></span></td>
+              <td><%= a.dateApplied ? a.dateApplied.toLocaleDateString('en-US', { timeZone: 'UTC' }) : '' %></td>
+              <td class="actions">
+                <a href="/applications/<%= a._id %>/edit">Edit</a>
+                <a href="/applications/<%= a._id %>/delete"
+                   onclick="return confirm('Delete this application?');">Delete</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </main>
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
